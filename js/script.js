@@ -12,7 +12,8 @@ var currentColor = colorBlack;
 var clickColor = [];
 
 // size
-var currentSize = 5;
+var clickSize = [];
+var currentSize = 'pencil size';
 
 // tools
 var currentTool = 'marker';
@@ -33,6 +34,7 @@ function getCanvasData(x, y, dragging) {
   clickX.push(x);
   clickY.push(y);
   clickDrag.push(dragging);
+  clickSize.push(currentSize);
 
   if (currentTool == 'eraser') {
     clickColor.push('#ffffff');
@@ -45,9 +47,17 @@ function getCanvasData(x, y, dragging) {
 function redraw() {
   clearColoring();
 
+  var radius = null;
   context.lineJoin = 'round';
 
   for (var i = 0; i < clickX.length; i++) {
+
+    // check size
+    if (clickSize[i] == "pencil size") {
+			radius = 5;
+		} else if(clickSize[i] == "eraser size") {
+      radius = 15;
+    }
 
     context.beginPath();
     if (clickDrag[i] && i) {
@@ -59,7 +69,7 @@ function redraw() {
     context.closePath();
     context.stroke();
     context.strokeStyle = clickColor[i];
-    context.lineWidth = 5;
+    context.lineWidth = radius;
   }
 }
 
@@ -124,29 +134,19 @@ $('#coloring_canvas').on('mouseleave touchcancel', function(e) {
 });
 
 
-// Clear coloring
-$('#clear_coloring').on('click', function() {
-  clickX = [];
-  clickY = [];
-  clickDrag = [];
-  clickColor = [];
-  clearColoring();
-});
-
-
 /**
  *  Pencils
  */
 $('#coloring_pencil_black').on('click', function() {
   currentColor = colorBlack;
   currentTool = 'marker';
-  // currentSize = 5;
+  currentSize = 'pencil size';
 });
 
 $('#coloring_pencil_red').on('click', function() {
   currentColor = colorRed;
   currentTool = 'marker';
-  // currentSize = 5;
+  currentSize = 'pencil size';
 });
 
 
@@ -155,7 +155,7 @@ $('#coloring_pencil_red').on('click', function() {
  */
 $('#coloring_eraser').on('click', function() {
   currentTool = 'eraser';
-  // currentSize = 10;
+  currentSize = 'eraser size';
 });
 
 
@@ -163,14 +163,23 @@ $('#coloring_eraser').on('click', function() {
  *  Menu
  */
 $('#coloring_tools').on('click', function() {
-  if ($('#coloring_menu').hasClass('is-open')) {
-    $('#coloring_menu').removeClass('is-open');
-  } else {
+  if (!$('#coloring_menu').hasClass('is-open')) {
     $('#coloring_menu').addClass('is-open');
+    $('#coloring_canvas').addClass('is-active');
+  } else {
+    $('#coloring_menu').removeClass('is-open');
+    $('#coloring_canvas').removeClass('is-active');
+    // clearing all data
+    clearColoring();
+    clickX = [];
+    clickY = [];
+    clickDrag = [];
+    clickColor = [];
+    clickSize = [];
   }
 });
 
-$('.coloring-btn').on('click', function() {
+$('.coloring-btn.tool').on('click', function() {
   $('.coloring-btn').removeClass('is-active');
   $(this).addClass('is-active');
 });

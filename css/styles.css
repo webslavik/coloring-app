@@ -15,6 +15,11 @@ button {
   background-color: transparent;
   outline: none; }
 
+.coloring-canvas {
+  pointer-events: none; }
+  .coloring-canvas.is-active {
+    pointer-events: auto; }
+
 .coloring-menu {
   position: fixed;
   top: auto;
