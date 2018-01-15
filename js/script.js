@@ -1,32 +1,38 @@
-var context = document.querySelector('#coloring_canvas').getContext('2d');
+var context = $('#coloring_canvas')[0].getContext('2d');
 
-// 
 var clickX = [];
 var clickY = [];
 var clickDrag = [];
 var paint = false;
 
 // colors
-var colorBlack = '#34495e';
+var colorBlack = '#222222';
 var colorRed = '#e74c3c';
 var currentColor = colorBlack;
 var clickColor = [];
 
 // size
-var clickSize = [];
-var currentSize = 'normal';
+var currentSize = 5;
 
 // tools
-var clickTool = [];
 var currentTool = 'marker';
 
 
+// Canvas size
+function setCanvasSize() {
+  var width = $(document).width();
+  var height = $(document).height();
+
+  $('#coloring_canvas').attr('width', width);
+  $('#coloring_canvas').attr('height', height);
+}
+setCanvasSize();
+
 // update cursor data
-function addClick(x, y, dragging) {
+function getCanvasData(x, y, dragging) {
   clickX.push(x);
   clickY.push(y);
   clickDrag.push(dragging);
-  clickSize.push(currentSize);
 
   if (currentTool == 'eraser') {
     clickColor.push('#ffffff');
@@ -39,20 +45,9 @@ function addClick(x, y, dragging) {
 function redraw() {
   clearColoring();
 
-  var radius;
   context.lineJoin = 'round';
 
   for (var i = 0; i < clickX.length; i++) {
-
-    if(clickSize[i] == "small"){
-			radius = 2;
-		} else if(clickSize[i] == "normal"){
-			radius = 5;
-		} else if(clickSize[i] == "large"){
-			radius = 10;
-		} else if(clickSize[i] == "huge"){
-			radius = 20;
-		}
 
     context.beginPath();
     if (clickDrag[i] && i) {
@@ -64,7 +59,7 @@ function redraw() {
     context.closePath();
     context.stroke();
     context.strokeStyle = clickColor[i];
-    context.lineWidth = radius;
+    context.lineWidth = 5;
   }
 }
 
@@ -83,7 +78,7 @@ $('#coloring_canvas').on('mousedown', function(e) {
   var mouseY = e.pageY - this.offsetTop;
 
   paint = true;
-  addClick(mouseX, mouseY, false);
+  getCanvasData(mouseX, mouseY, false);
   redraw();
 });
 
@@ -92,7 +87,7 @@ $('#coloring_canvas').on('touchstart', function(e) {
   var mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - this.offsetTop;
   
   paint = true;
-  addClick(mouseX, mouseY, false);
+  getCanvasData(mouseX, mouseY, false);
   redraw();
 });
 
@@ -102,7 +97,7 @@ $('#coloring_canvas').on('mousemove', function(e) {
   var mouseY = e.pageY - this.offsetTop;
 
   if (paint) {
-    addClick(mouseX, mouseY, true);
+    getCanvasData(mouseX, mouseY, true);
     redraw();
   }
 });
@@ -112,7 +107,7 @@ $('#coloring_canvas').on('touchmove', function(e) {
   var	mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - this.offsetTop;
 
   if (paint) {
-    addClick(mouseX, mouseY, true);
+    getCanvasData(mouseX, mouseY, true);
     redraw();
   }
 });
@@ -135,53 +130,32 @@ $('#clear_coloring').on('click', function() {
   clickY = [];
   clickDrag = [];
   clickColor = [];
-  clickSize = [];
   clearColoring();
 });
 
 
 /**
- *  Colors
+ *  Pencils
  */
-$('#color_black').on('click', function() {
+$('#coloring_pencil_black').on('click', function() {
   currentColor = colorBlack;
+  currentTool = 'marker';
+  // currentSize = 5;
 });
 
-$('#color_red').on('click', function() {
+$('#coloring_pencil_red').on('click', function() {
   currentColor = colorRed;
-});
-
-
-/**
- *  Size
- */
-$('#size_small').on('click', function() {
-  currentSize = 'small';
-});
-$('#size_normal').on('click', function() {
-  currentSize = 'normal';
-});
-$('#size_large').on('click', function() {
-  currentSize = 'large';
-});
-$('#size_huge').on('click', function() {
-  currentSize = 'huge';
+  currentTool = 'marker';
+  // currentSize = 5;
 });
 
 
 /**
  *  Tools
  */
-// $('#tool_crayon').on('click', function() {
-//   currentTool = 'crayon';
-// });
-
-$('#tool_marker').on('click', function() {
-  currentTool = 'marker';
-});
-
-$('#tool_eraser').on('click', function() {
+$('#coloring_eraser').on('click', function() {
   currentTool = 'eraser';
+  // currentSize = 10;
 });
 
 

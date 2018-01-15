@@ -79,13 +79,15 @@ button {
     -o-transition: all ease-out 200ms;
     transition: all ease-out 200ms; }
     .coloring-btn.tool:hover svg {
-      -webkit-transform: scale(1.1);
-      -ms-transform: scale(1.1);
-      transform: scale(1.1); }
+      -webkit-transform: scale(1.15);
+      -ms-transform: scale(1.15);
+      transform: scale(1.15); }
     .coloring-btn.tool.is-active {
-      background-color: #f9650c; }
-      .coloring-btn.tool.is-active:hover {
-        background-color: #f05e06; }
+      background-color: #fba470; }
+      .coloring-btn.tool.is-active svg {
+        -webkit-transform: scale(1.15);
+        -ms-transform: scale(1.15);
+        transform: scale(1.15); }
     .coloring-btn.tool svg {
       -webkit-transition: all 200ms ease-out;
       -o-transition: all 200ms ease-out;

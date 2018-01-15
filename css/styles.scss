@@ -58,19 +58,12 @@ button {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  // background-color: #00bcd4;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.15), 0px 4px 8px rgba(0,0,0,0.2);
   transition: all ease-out 200ms;
   cursor: pointer;
 
   &:hover {
-    // background-color: darken(#00bcd4, 3%);
     box-shadow: 0px 4px 6px rgba(0,0,0,0.15), 0px 6px 10px rgba(0,0,0,0.2);
-  }
-
-
-  .svg-icon {
-    // fill: #ffffff;
   }
 
   &.toggle {
@@ -88,15 +81,18 @@ button {
 
     &:hover {
       svg {
-        transform: scale(1.1);
+        transform: scale(1.15);
       }
     }
 
     &.is-active {
-      background-color: #f9650c;
-      &:hover {
-        background-color: darken(#f9650c, 3%);
+      background-color: lighten(#f9650c, 20%);
+      svg {
+        transform: scale(1.15);
       }
+      // &:hover {
+      //   background-color: darken(#f9650c, 3%);
+      // }
     }
 
     svg {
