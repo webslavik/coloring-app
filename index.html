@@ -10,10 +10,30 @@
 </head>
 <body>
   
-  <button id='clear_coloring'>Clear</button>
+  <div>
+    <button type='button' id='clear_coloring'>Clear</button>
+  </div>
+  <div>
+    <div>Choose a color:</div>
+    <button type='button' id='color_black'>Black</button>
+    <button type='button' id='color_red'>Red</button>
+  </div>
+  <div>
+    <div>Choose a size:</div>
+    <button type='button' id='size_small'>Small</button>
+    <button type='button' id='size_normal'>Normal</button>
+    <button type='button' id='size_large'>Large</button>
+    <button type='button' id='size_huge'>Huge</button>
+  </div>
+  <div>
+    <div>Choose a tool:</div>
+    <!-- <button type='button' id='tool_crayon'>Crayon</button> -->
+    <button type='button' id='tool_marker'>Marker</button>
+    <button type='button' id='tool_eraser'>Eraser</button>
+  </div>
 
   <div class="coloring">
-    <canvas id='coloring_canvas' width='200' height='400'></canvas>
+    <canvas id='coloring_canvas' width='500' height='500'></canvas>
 
     <div class="coloring-tools">
 
