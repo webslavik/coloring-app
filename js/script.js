@@ -183,3 +183,20 @@ $('#tool_marker').on('click', function() {
 $('#tool_eraser').on('click', function() {
   currentTool = 'eraser';
 });
+
+
+/**
+ *  Menu
+ */
+$('#coloring_tools').on('click', function() {
+  if ($('#coloring_menu').hasClass('is-open')) {
+    $('#coloring_menu').removeClass('is-open');
+  } else {
+    $('#coloring_menu').addClass('is-open');
+  }
+});
+
+$('.coloring-btn').on('click', function() {
+  $('.coloring-btn').removeClass('is-active');
+  $(this).addClass('is-active');
+});
