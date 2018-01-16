@@ -1,28 +1,32 @@
 $(function () {
-
   var context = $('#coloring_canvas')[0].getContext('2d');
 
   var radius = 5;
   var paint = false;
   var toolMode = 'pencil';
   
+  // default color
+  context.fillStyle = '#222222';
+  context.strokeStyle = '#222222';
+
+
   /**
-   *  set Canvas size
+   *  set Canvas size and when change window size too
    */
   function setCanvasSize() {
-    var width = $(document).width();
-    var height = $(document).height();
+    var width = $('#coloring').width();
+    var height = $('#coloring').height();
 
     $('#coloring_canvas').attr('width', width);
     $('#coloring_canvas').attr('height', height);
+    context.lineWidth = radius * 2;
   }
   setCanvasSize();
 
-
-  // default settings
-  context.lineWidth = radius * 2;
-  context.fillStyle = '#222222';
-  context.strokeStyle = '#222222';
+  
+  $(window).on('resize', function() {
+    setCanvasSize();
+  });
 
 
   /**
@@ -140,8 +144,5 @@ $(function () {
     $(this).addClass('is-active');
 
     toolMode = 'eraser';
-    var color = $(this).data('color');
-    setColor(color);
   });
-
 });
