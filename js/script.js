@@ -4,7 +4,7 @@ $(function () {
 
   var radius = 5;
   var paint = false;
-
+  var toolMode = 'pencil';
   
   /**
    *  set Canvas size
@@ -30,6 +30,12 @@ $(function () {
    */
   function drawLine(x, y) {
     if (paint) {
+      if (toolMode == 'pencil') {
+        context.globalCompositeOperation = "source-over";
+      } else {
+        context.globalCompositeOperation = "destination-out";
+      }
+
       context.lineTo(x, y);
       context.stroke();
       context.beginPath();
@@ -123,6 +129,7 @@ $(function () {
     $('.coloring-btn').removeClass('is-active');
     $(this).addClass('is-active');
 
+    toolMode = 'pencil';
     var color = $(this).data('color');
     setColor(color);
   });
@@ -132,6 +139,7 @@ $(function () {
     $('.coloring-btn').removeClass('is-active');
     $(this).addClass('is-active');
 
+    toolMode = 'eraser';
     var color = $(this).data('color');
     setColor(color);
   });
