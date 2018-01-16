@@ -28,15 +28,15 @@ $(function () {
   /**
    *  draw
    */
-  function drawLine(data) {
+  function drawLine(x, y) {
     if (paint) {
-      context.lineTo(data.clientX, data.clientY);
+      context.lineTo(x, y);
       context.stroke();
       context.beginPath();
-      context.arc(data.clientX, data.clientY, radius, 0, Math.PI*2);
+      context.arc(x, y, radius, 0, Math.PI*2);
       context.fill();
       context.beginPath();
-      context.moveTo(data.clientX, data.clientY);
+      context.moveTo(x, y);
     }
   }
 
@@ -61,34 +61,35 @@ $(function () {
    */
   // start
   $('#coloring_canvas').on('mousedown', function (e) {
-    // var x = e.clientX;
-    // var x = e.clientX;
-
+    var x = e.clientX;
+    var y = e.clientY;
     paint = true;
-    drawLine(e);
+
+    drawLine(x, y);
   });
 
   $('#coloring_canvas').on('touchstart', function (e) {
-    var mouseX = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - this.offsetLeft;
-    var mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - this.offsetTop;
-    console.log(mouseY, mouseX);
+    var x = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - this.offsetLeft;
+    var y = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - this.offsetTop;
     paint = true;
+
+    drawLine(x, y);
   });
 
   // move
   $('#coloring_canvas').on('mousemove', function (e) {
-    drawLine(e);
+    var x = e.clientX;
+    var y = e.clientY;
+
+    drawLine(x, y);
   });
 
-  // $('#coloring_canvas').on('touchmove', function (e) {
-  //   var mouseX = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - this.offsetLeft;
-  //   var mouseY = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - this.offsetTop;
+  $('#coloring_canvas').on('touchmove', function (e) {
+    var x = (e.changedTouches ? e.changedTouches[0].pageX : e.pageX) - this.offsetLeft;
+    var y = (e.changedTouches ? e.changedTouches[0].pageY : e.pageY) - this.offsetTop;
 
-  //   if (paint) {
-  //     getCanvasData(mouseX, mouseY, true);
-  //     redraw();
-  //   }
-  // });
+    drawLine(x, y);
+  });
 
   // up
   $('#coloring_canvas').on('mouseup touchend', function (e) {
@@ -96,12 +97,11 @@ $(function () {
     context.beginPath();
   });
 
-  // // leave
+  // leave
   $('#coloring_canvas').on('mouseleave touchcancel', function (e) {
     paint = false;
     context.beginPath(); 
   });
-
 
 
   /**
